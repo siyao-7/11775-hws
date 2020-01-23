@@ -4,10 +4,11 @@ MED Videos can be found at - http://speech-kitchen.org/sdalmia/11775_videos.tar.
 
 Initial Steps: 
 ```
-git clone https://github.com/siddalmia/11775-hws.git
+git clone https://github.com/11775website/11775-hws
 
 cd /home/ubuntu
-wget http://speech-kitchen.org/sdalmia/11775_videos.tar.gz
-tar -xvzf 11775_videos.tar.gz
-mv 11775_videos/video ../
+mkdir videos
+sh run_download_video.sh all_video.lst ./videos
+mkdir asrs
+sh run_download_asr.sh all_asr.lst ./asrs
 ```
