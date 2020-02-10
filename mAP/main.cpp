@@ -2,6 +2,8 @@
 #include <fstream>
 #include "calcap.h"
 #include <iostream>
+#include <stdio.h>
+#include <cstdlib>
 using namespace std;
 
 int main(int argc, char* argv[])

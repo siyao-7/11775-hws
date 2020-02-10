@@ -1,4 +1,5 @@
 #include "calcap.h"
+#include <cstdlib>
 using namespace std;
 
 float calcap(float* labels, float* rank, int len)

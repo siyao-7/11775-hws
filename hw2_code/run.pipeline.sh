@@ -2,23 +2,22 @@
 
 # This script performs a complete Media Event Detection pipeline (MED) using video features:
 # a) preprocessing of videos, b) feature representation,
-# c) computation of MAP scores, d) computation of class labels for kaggle submission.
+# c) computation of MAP scores
 
 # You can pass arguments to this bash script defining which one of the steps you want to perform.
 # This helps you to avoid rewriting the bash script whenever there are
 # intermediate steps that you don't want to repeat.
 
-# execute: bash run.pipeline.sh -p true -f true -m true -k true -y filepath
+# execute: bash run.pipeline.sh -p true -f true -m true -y filepath
 
 # Reading of all arguments:
-while getopts p:f:m:k:y: option		# p:f:m:k:y: is the optstring here
+while getopts p:f:m:y: option		# p:f:m:y: is the optstring here
 	do
 	case "${option}"
 	in
 	p) PREPROCESSING=${OPTARG};;       # boolean true or false
 	f) FEATURE_REPRESENTATION=${OPTARG};;  # boolean
 	m) MAP=${OPTARG};;                 # boolean
-	k) KAGGLE=$OPTARG;;                # boolean
     y) YAML=$OPTARG;;                  # path to yaml file containing parameters for feature extraction
 	esac
 	done
@@ -102,36 +101,6 @@ if [ "$MAP" = true ] ; then
     echo "# MED with CNN Features: MAP results  #"
     echo "#######################################"
 
-
-    # 1. TODO: Train SVM with OVR using only videos in training set.
-
-    # 2. TODO: Test SVM with val set and calculate its MAP scores for own info.
-
-	# 3. TODO: Train SVM with OVR using videos in training and validation set.
-
-	# 4. TODO: Test SVM with test set saving scores for submission
-
-fi
-
-
-if [ "$KAGGLE" = true ] ; then
-
-    echo "##########################################"
-    echo "# MED with SURF Features: KAGGLE results #"
-    echo "##########################################"
-
-    # 1. TODO: Train SVM with OVR using only videos in training set.
-
-    # 2. TODO: Test SVM with val set and calculate its MAP scores for own info.
-
-	# 3. TODO: Train SVM with OVR using videos in training and validation set.
-
-    # 4. TODO: Test SVM with test set saving scores for submission
-
-
-    echo "##########################################"
-    echo "# MED with CNN Features: KAGGLE results  #"
-    echo "##########################################"
 
     # 1. TODO: Train SVM with OVR using only videos in training set.
 
