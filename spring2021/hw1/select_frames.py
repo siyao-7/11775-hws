@@ -28,7 +28,7 @@ if __name__ == "__main__":
       continue
     array = numpy.genfromtxt(mfcc_path, delimiter=";")
     numpy.random.shuffle(array)
-    select_size = int(array.shape[0] * args.ratio)
+    select_size = int(array.shape[0] * args.select_ratio)
     feat_dim = array.shape[1]
 
     for n in xrange(select_size):
