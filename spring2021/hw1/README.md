@@ -37,7 +37,7 @@ $ sudo apt install ffmpeg
 
 Install python dependencies by:
 ```
-$ sudo pip install sklearn pandas tqdm
+$ sudo pip2 install sklearn pandas tqdm
 ```
 
 2. Get MFCCs
@@ -46,6 +46,7 @@ We will first extract wave files and then run OpenSMILE to get MFCCs into CSV fi
 ```
 $ for file in videos/*;do filename=$(basename $file .mp4); ffmpeg -y -i $file -ac 1 -f wav audio/${filename}.wav; ./opensmile-2.3.0/bin/linux_x64_standalone_static/SMILExtract -C config/MFCC12_0_D_A.conf -I audio/${filename}.wav -O mfcc/${filename}.mfcc.csv;done
 ```
+The above should take 1-2 hours.
 
 Note that some audio/mfcc files might be missing. This is due to the fact that some videos have no audio, which is common in real-world scenario. We'll learn to deal with that.
 
@@ -152,13 +153,13 @@ Test:
 $ python2 test_mlp.py models/mfcc-200.mlp.model bof 50 labels/test_for_student.label mfcc-200.mlp.csv
 ```
 
-### Submission
+### Submission to Kaggle
 
 You can then submit the test outputs to the leaderboard:
 ```
 https://www.kaggle.com/c/11775-hw1
 ```
-We use accuracy as our metric.
+We use accuracy as the evaluation metric. Please refer to `hw1_sample_submission.csv` for submission format.
 
 ### Things to try to improve your model performance
 
