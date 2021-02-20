@@ -57,7 +57,7 @@ As taught in the class, we will use K-Means to get feature codebook from the MFC
 $ python2 select_frames.py labels/trainval.csv 0.2 selected.mfcc.csv --mfcc_path mfcc/
 ```
 
-Now we train it by (50 clusters, this would take about 7-10 minutes):
+Now we train it by (50 clusters, this would take about 7-15 minutes):
 ```
 $ python2 train_kmeans.py selected.mfcc.csv 50 kmeans.50.model
 ```

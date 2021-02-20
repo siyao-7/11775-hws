@@ -8,6 +8,7 @@ import time
 import collections
 import csv
 import argparse
+from tqdm import tqdm
 # Generate k-means features for videos; each video is represented by a single vector
 
 parser = argparse.ArgumentParser()
@@ -27,7 +28,7 @@ if __name__ == '__main__':
   # 2. iterate over each video and use kmeans.predict(mfcc_features_of_video) and save the results in this format video_name.kmeans
   start = time.time()
   fread = open(args.file_list, "r")
-  for line in fread.readlines():
+  for line in tqdm(fread.readlines()):
     mfcc_path = os.path.join(args.mfcc_path, line.strip() + ".mfcc.csv")
     bof_path = os.path.join(args.output_path, line.strip() + ".csv")
 
