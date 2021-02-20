@@ -5,6 +5,7 @@ import argparse
 import numpy
 import os
 import sys
+from tqdm import tqdm
 
 parser = argparse.ArgumentParser()
 parser.add_argument("file_list")
@@ -22,7 +23,7 @@ if __name__ == "__main__":
   # num_of_frame * ratio rows
   numpy.random.seed(18877)
 
-  for line in fread.readlines()[1:]:  # skipped the header
+  for line in tqdm(fread.readlines()[1:]):  # skipped the header
     mfcc_path = os.path.join(args.mfcc_path, line.strip().split(",")[0] + ".mfcc.csv")
     if not os.path.exists(mfcc_path):
       continue

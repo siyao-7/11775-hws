@@ -52,7 +52,7 @@ Note that some audio/mfcc files might be missing. This is due to the fact that s
 
 3. K-Means clustering
 
-As taught in the class, we will use K-Means to get feature codebook from the MFCCs. Since there are too many feature lines, we will randomly select a subset for K-Means clustering by:
+As taught in the class, we will use K-Means to get feature codebook from the MFCCs. Since there are too many feature lines, we will randomly select a subset (20%) for K-Means clustering by:
 ```
 $ python2 select_frames.py labels/trainval.csv 0.2 selected.mfcc.csv --mfcc_path mfcc/
 ```
