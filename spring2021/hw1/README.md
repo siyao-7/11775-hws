@@ -79,52 +79,9 @@ Now you can follow [here](#svm-classifier) to train SVM classifiers or [MLP](#ml
 
 ### SoundNet-Global-Pool
 
-Just as the MFCC-Bag-Of-Feature, we will also use the [SoundNet](https://arxiv.org/pdf/1610.09001.pdf) model to extract a vector feature representation for each video. Since SoundNet is trained on a large dataset, this feature is usually better compared to MFCCs.
+Just as the MFCC-Bag-Of-Feature, we could also use the [SoundNet](https://arxiv.org/pdf/1610.09001.pdf) model to extract a vector feature representation for each video. Since SoundNet is trained on a large dataset, this feature is usually better compared to MFCCs.
 
-1. Install dependencies
-
-We will use our fork of the SoundNet-Tensorflow repo:
-```
-$ git clone https://github.com/JunweiLiang/SoundNet-tensorflow
-```
-
-We will need librosa to read audio files:
-```
-$ sudo pip2 install llvmlite==0.31.0
-$ sudo pip2 install librosa
-```
-
-And Tensorflow:
-```
-$ sudo pip2 install tensorflow-gpu==1.15.0
-```
-
-Download the pretrained SoundNet model:
-```
-$ cd SoundNet-tensorflow
-$ mkdir models; cd models
-$ wget https://aladdin-eax.inf.cs.cmu.edu/shares/11775/homeworks/sound8.npy
-$ cd ..
-```
-
-2. Extract features for each video
-
-SoundNet has 8 convolutional layers. You can see full layer definition in the paper and in `models.py`. We will use conv4 [index: 14, dimension: 128] as an example and you can experiment with others.
-
-Suppose you are under the `SoundNet-tensorflow` directory. First get the audio file into a list:
-```
-$ ls ../audio/|while read line;do echo "../audio/${line}";done > data.lst
-```
-
-Extract the feature by (this takes a couple of minutes):
-```
-$ python2 -W ignore extract_feat.py -m 14 -x 15 -s -p extract -t data.lst -o features/
-```
-
-Since the audio is of different length, the features will have variable rows. We get a fixed-length vector representation for each video by global averaging:
-```
-$ python2 ../collect_soundnet.py features/ tf_fea14 ../soundnet_fea14_avg --use_average
-```
+Please follow this Github repo to extract audio features. Please read the paper and think about what layer(s) to use. If you save the feature representations in the same format as in the `bof/` folder, you can directly train SVM and MLP using the following instructions.
 
 ### SVM classifier
 
