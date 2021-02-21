@@ -98,12 +98,6 @@ Run SVM on the test set:
 $ python2 test_svm_multiclass.py models/mfcc-50.svm.multiclass.model bof/ 50 labels/test_for_student.label mfcc-50.svm.multiclass.csv
 ```
 
-For soundNet features:
-```
-$ python2 train_svm_multiclass.py soundnet_fea14_avg/ 128 labels/trainval.csv models/soundnet-conv4.svm.multiclass.model
-$ python2 test_svm_multiclass.py models/soundnet-conv4.svm.multiclass.model soundnet_fea14_avg/ 128 labels/test_for_student.label soundnet-conv4.svm.multiclass.csv
-```
-
 ### MLP classifier
 
 Suppose you are under `hw1` directory. Train MLP by:
@@ -116,11 +110,6 @@ Test:
 $ python2 test_mlp.py models/mfcc-50.mlp.model bof 50 labels/test_for_student.label mfcc-50.mlp.csv
 ```
 
-For soundNet features:
-```
-$ python2 train_mlp.py soundnet_fea14_avg/ 128 labels/trainval.csv models/soundnet-conv4.mlp.model
-$ python2 test_mlp.py models/soundnet-conv4.mlp.model soundnet_fea14_avg 128 labels/test_for_student.label soundnet-conv4.mlp.csv
-```
 
 ### Submission to Kaggle
 
