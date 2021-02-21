@@ -81,7 +81,7 @@ Now you can follow [here](#svm-classifier) to train SVM classifiers or [MLP](#ml
 
 Just as the MFCC-Bag-Of-Feature, we could also use the [SoundNet](https://arxiv.org/pdf/1610.09001.pdf) model to extract a vector feature representation for each video. Since SoundNet is trained on a large dataset, this feature is usually better compared to MFCCs.
 
-Please follow this Github repo to extract audio features. Please read the paper and think about what layer(s) to use. If you save the feature representations in the same format as in the `bof/` folder, you can directly train SVM and MLP using the following instructions.
+Please follow [this Github repo](https://github.com/eborboihuc/SoundNet-tensorflow) to extract audio features. Please read the paper and think about what layer(s) to use. If you save the feature representations in the same format as in the `bof/` folder, you can directly train SVM and MLP using the following instructions.
 
 ### SVM classifier
 
