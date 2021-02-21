@@ -8,7 +8,8 @@ import pickle
 import sys
 import numpy as np
 
-# Apply the SVM model to the testing videos; Output the score for each video
+# Apply the SVM model to the testing videos;
+# Output the prediction class for each video
 
 
 parser = argparse.ArgumentParser()

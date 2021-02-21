@@ -1,5 +1,5 @@
 #!/bin/python
-# Randomly select
+# Randomly select MFCC frames
 
 import argparse
 import numpy

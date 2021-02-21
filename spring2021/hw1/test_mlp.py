@@ -8,7 +8,8 @@ import pickle
 import sys
 import numpy as np
 
-# Apply the SVM model to the testing videos; Output the score for each video
+# Apply the MLP model to the testing videos;
+# Output prediction class for each video
 
 
 parser = argparse.ArgumentParser()
@@ -34,21 +35,19 @@ if __name__ == '__main__':
     # HW00006228
     video_id = os.path.splitext(line.strip())[0]
     video_ids.append(video_id)
-    # pdb.set_trace()
-    #feat_filepath = os.path.join(args.feat_dir, video_id + ".kmeans.csv")
     feat_filepath = os.path.join(args.feat_dir, video_id + args.feat_appendix)
     if not os.path.exists(feat_filepath):
       feat_list.append(np.zeros(args.feat_dim))
     else:
-      feat_list.append(np.genfromtxt(feat_filepath, delimiter=";", dtype='float'))
+      feat_list.append(np.genfromtxt(feat_filepath, delimiter=";", dtype="float"))
 
   X = np.array(feat_list)
 
-  # 3. Get scores with trained svm model
+  # 3. Get predictions
   # (num_samples) with integer
   pred_classes = mlp.predict(X)
 
-  # 4. save the argmax decisions for submission
+  # 4. save for submission
   with open(args.output_file, "w") as f:
     f.writelines("Id,Category\n")
     for i, pred_class in enumerate(pred_classes):

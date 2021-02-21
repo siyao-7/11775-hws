@@ -8,7 +8,7 @@ import argparse
 import sys
 import pdb
 
-# Performs K-means clustering and save the model to a local file
+# Train SVM
 
 parser = argparse.ArgumentParser()
 parser.add_argument("feat_dir")
@@ -21,13 +21,11 @@ if __name__ == '__main__':
   args = parser.parse_args()
 
   # 1. read all features in one array.
-  # Use list of videos in training set and read only those features.
   fread = open(args.list_videos, "r")
   feat_list = []
-  # if event occured: 1 if not: 0; labels
+  # labels are [0-9]
   label_list = []
   # load video names and events in dict
-  #df_videos_label = pd.read_csv(list_videos, delimiter=' ')
   df_videos_label = {}
   for line in open(args.list_videos).readlines()[1:]:
     video_id, category = line.strip().split(",")
@@ -35,14 +33,11 @@ if __name__ == '__main__':
 
 
   for line in fread.readlines()[1:]:
-    # pdb.set_trace()
     video_id = line.strip().split(",")[0]
-    #feat_filepath = os.path.join(args.feat_dir, video_id + ".kmeans.csv")
     feat_filepath = os.path.join(args.feat_dir, video_id + args.feat_appendix)
-    # for videos with no audio, create feature and label
+    # for videos with no audio, ignore
     if os.path.exists(feat_filepath):
-      # pdb.set_trace()
-      feat_list.append(np.genfromtxt(feat_filepath, delimiter=";", dtype='float'))
+      feat_list.append(np.genfromtxt(feat_filepath, delimiter=";", dtype="float"))
 
       label_list.append(int(df_videos_label[video_id]))
 
@@ -51,7 +46,6 @@ if __name__ == '__main__':
   X = np.array(feat_list)
 
   # pass array for svm training
-  # pdb.set_trace()
   # one-versus-rest multiclass strategy
   clf = SVC(cache_size=2000, decision_function_shape='ovr', kernel="rbf")
   clf.fit(X, y)

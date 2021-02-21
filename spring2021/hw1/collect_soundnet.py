@@ -1,5 +1,5 @@
 # coding=utf-8
-# collect the soundnet features into csv
+# collect the soundnet features into csv (by global averaging)
 import argparse
 import os
 import numpy as np
@@ -25,14 +25,16 @@ if __name__ == "__main__":
     feature_file = os.path.join(video, "%s.npy" % args.feature_name)
     video_id = video.strip("/").split("/")[-1]
 
-    # (T, 32)
+    # (T, C)
+    # T depends on the audio length
+    # C is the number of filters for that CNN layer
     feature = np.load(feature_file)
 
     new_feature_file = os.path.join(args.outpath, "%s.csv" % video_id)
 
     if args.use_average:
-      feature = np.mean(feature, axis=0)  # (32,)
-
+      # global averaging
+      feature = np.mean(feature, axis=0)  # (C,)
 
     with open(new_feature_file, "w") as f:
       for i in range(len(feature)):
@@ -40,6 +42,6 @@ if __name__ == "__main__":
           feature_list = [str(feature[i])]
         else:
           feature_list = [str(o) for o in feature[i]]
-        # semicolon separated
+        # semicolon separated, to be consistent with MFCC-BoF outputs
         f.writelines("%s\n" % (";".join(feature_list)))
 
