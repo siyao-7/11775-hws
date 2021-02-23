@@ -13,7 +13,7 @@ For the baselines, we will provide code and instructions for two feature represe
 First, put the videos into `videos/` folder and the labels into `labels/` folder simply by:
 ```
 $ unzip hw_11775_videos.zip
-$ unzip labels.zip
+$ unzip labels_v2.zip
 ```
 
 ### MFCC-Bag-Of-Features
