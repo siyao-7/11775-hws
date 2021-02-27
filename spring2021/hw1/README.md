@@ -25,7 +25,7 @@ $ mkdir audio/ mfcc/ bof/
 
 1. Dependencies: FFMPEG, OpenSMILE, Python: sklearn, pandas
 
-Download OpenSMILE 2.3.0 from [here](https://he.audeering.com/download/opensmile-2-3-0-tar-gz/) and then extract in this directory:
+Download OpenSMILE 2.3.0 from [here](https://he.audeering.com/download/opensmile-2-3-0-tar-gz/) and then extract in this directory (another [link](https://aladdin-eax.inf.cs.cmu.edu/shares/11775/homeworks/opensmile-2.3.0.tar.gz) for the package):
 ```
 $ tar -zxvf opensmile-2.3.0.tar.gz
 ```
