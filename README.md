@@ -1,3 +1,3 @@
 # 11775-hws
 
-please check spring2021/hw1
+For HW1 and dataset please follow the instructions in spring2021/hw1
