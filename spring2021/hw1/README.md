@@ -46,7 +46,7 @@ We will first extract wave files and then run OpenSMILE to get MFCCs into CSV fi
 ```
 $ for file in videos/*;do filename=$(basename $file .mp4); ffmpeg -y -i $file -ac 1 -f wav audio/${filename}.wav; ./opensmile-2.3.0/bin/linux_x64_standalone_static/SMILExtract -C config/MFCC12_0_D_A.conf -I audio/${filename}.wav -O mfcc/${filename}.mfcc.csv;done
 ```
-The above should take 1-2 hours.
+The above should take 1-2 hours. *We got 7939 wav files and mfcc files out of 7942 videos*.
 
 Note that some audio/mfcc files might be missing. This is due to the fact that some videos have no audio, which is common in real-world scenario. We'll learn to deal with that.
 
