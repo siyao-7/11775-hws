@@ -39,8 +39,8 @@ Please check surf_feat_extraction.py for details.
 ## Extract CNN features
 In HW2 we ask you to extract CNN-based feature for each frame. We provide an example using ResNet, a type of CNN model that has been widely used in many computer vision tasks. To extract the feature of an image. You may use:
 ```
-ResNet = Get_CNN(cuda=False, model_name='resnet34', layer='avgpool', layer_output_size=512)
-emb = ResNet.get_emb(Image.open('test.jpg'))
+model = Get_CNN(cuda=False, model_name='resnet34', layer='avgpool', layer_output_size=512)
+emb = model.get_emb(Image.open('test.jpg'))
 ```
 Please check extract_resnet.py for the details. After extracting CNN-based feature, you can choose to apply and build bag-of-words feature as in HW1 or simply use the original feature extracted. You are alos encouraged to try some more advanced model such as DenseNet and RexNeXt. 
 

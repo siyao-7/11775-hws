@@ -56,8 +56,8 @@ class Get_CNN():
         return model, layer
 
 if __name__ == "__main__":
-    ResNet = tGet_CNN(cuda=False, model_name='resnet34', layer='avgpool', layer_output_size=512)
+    model = tGet_CNN(cuda=False, model_name='resnet34', layer='avgpool', layer_output_size=512)
     img = Image.open('test.jpg')
-    emb = ResNet.get_emb(img)
+    emb = model.get_emb(img)
     print(emb.shape)
 
