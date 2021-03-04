@@ -44,6 +44,9 @@ emb = model.get_emb(Image.open('test.jpg'))
 ```
 Please check extract_resnet.py for the details. After extracting CNN-based feature, you can choose to apply and build bag-of-words feature as in HW1 or simply use the original feature extracted. You are alos encouraged to try some more advanced model such as DenseNet and RexNeXt. 
 
+Once you have the features for each frame, you can then aggregate them by averaging or maximizing these vectors to build the final video-level feature. (For example, for a 300-frame video you have a 300x512 feature matrix, you average over its 300 frames and get the final 512-dim video representaion.)
+
+
 
 ## Training and Testing Classifiers
 As you already have the code to train and test SVM and MLP.
