@@ -32,9 +32,16 @@ In HW2 we ask you to extract CNN-based feature for each frame. We provide an exa
 ResNet = Get_CNN(cuda=False, model_name='resnet34', layer='avgpool', layer_output_size=512)
 emb = ResNet.get_emb(Image.open('test.jpg'))
 ```
-Please check extract_resnet.py for the details. After extracting CNN-based feature, you can choose to apply and build bag-of-words feature as in HW1 or simply use the original feature extracted. 
+Please check extract_resnet.py for the details. After extracting CNN-based feature, you can choose to apply and build bag-of-words feature as in HW1 or simply use the original feature extracted. You are alos encouraged to try some more advanced model such as DenseNet and RexNeXt. 
 
 
 ## Training and Testing Classifiers
 As you already have the code to train and test SVM and MLP.
 **You can reuse your code from HW1 for bag-of-words and SVM/MLP training.**
+
+
+## Potential Improvement
+Now here comes the fun part. You can start experimenting with the code and exploring how you can improve your model performance. Some hints:
++ Use more advanced visual models/features such as DenseNet and ResNeXt.
++ End-to-end training of these models instead of just extracting features.
++ Use video models/features such as I3D that takes video clips as its input insteadt of frames.
