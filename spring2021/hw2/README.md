@@ -1,13 +1,34 @@
-Full pipeline is given in the shell script **run.pipeline.sh**.
+# Instructions for hw2
 
-You can pass pass arguments to this bash script defining which one of the steps (preprocessing: **p**, feature representation: **f**, MAP scores: **m**, kaggle results: **k**, yaml filepath: **y**) you want to perform.
+In this homework we will perform a video classification task using visual features.
 
-This helps you to avoid rewriting the bash script whenever there are intermediate steps that you don't want to repeat.
-Here we also show you how to keep all your parameters in a **yaml file**. It helps to keep track of different parameter configurations that you may try. However, you do not have to keep your parameters in a yaml file. You can change this code as you want.
+## Video Data and Labels
 
-Here is an example of how to execute the script: 
+Please download the videos from [this link](https://drive.google.com/file/d/1Oyzv7eC0QDrg0vX3AdSXYzdsFpIsdzT-/view?usp=sharing) or [this link](https://aladdin-eax.inf.cs.cmu.edu/shares/11775/homeworks/hw_11775_videos.zip). Then download the labels from [here](https://aladdin-eax.inf.cs.cmu.edu/shares/11775/homeworks/labels_v2.zip). Extract these zip files to get videos and their labels by:
+```
+$ unzip hw_11775_videos.zip
+$ unzip labels_v2.zip
+```
 
-    bash run.pipeline.sh -p true -f true -m true -y filepath
-    
-As you already have functions to train kmeans and SVMs, we did not include those skeletons here.
-The main TODOs will be to write the function for SURF feature extraction and for CNN feature extraction. **You can reuse your code from HW1 for kmeans and SVM training.**
+## Overirew
+A video-based MED system is composed of mainly three parts: 1) Video pre-processing, 2) video feature extraction, and 3) classification. You will mainly focus on learning how to use two-types of visual features in this homework. You may simply reuse the classifcation codebase you finished in HW1. 
+
+## Video Pre-Processing
+There are many types of video features. For simplicity, we ask you to extract and aggregate features of RGB frames from videos. For pre-processing, we fist use ffmpeg you learned in HW1 to extract the video frames:
+
+```
+for video in videos/*.mp4
+do
+    base=$(basename -- "$video")
+    base="${base%.*}"
+    mkdir -p rgb/$base
+    ffmpeg -i "$video"  rgb/"$base"/frame_%05d.jpg -hide_banner
+done
+```
+
+
+
+
+## Training and Testing Classifiers
+As you already have the code to train and test SVM and MLP.
+**You can reuse your code from HW1 for bag-of-words and SVM/MLP training.**
