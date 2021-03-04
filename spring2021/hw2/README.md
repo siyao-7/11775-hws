@@ -26,6 +26,16 @@ do
 done
 ```
 
+## Extract SURF feature
+For the hand-crafted visual feature. We ask you to Extract SURF features over keyframes of downsampled videos (0th, 5th, 10th frame, ...). We provide a simple template for you to work on SURF:
+
+```
+python surf_feat_extraction.py -i list/all.video config.yaml
+```
+
+Please check surf_feat_extraction.py for details.
+
+
 ## Extract CNN features
 In HW2 we ask you to extract CNN-based feature for each frame. We provide an example using ResNet, a type of CNN model that has been widely used in many computer vision tasks. To extract the feature of an image. You may use:
 ```
