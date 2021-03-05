@@ -11,10 +11,12 @@ $ unzip labels_v2.zip
 ```
 
 ## Overirew
-A video-based MED system is composed of mainly three parts: 1) Video pre-processing, 2) video feature extraction, and 3) classification. You will mainly focus on learning how to use two-types of visual features in this homework. You may simply reuse the classifcation codebase you finished in HW1. 
+A video-based MED system is composed of mainly three parts: 1) Video pre-processing, 2) video feature extraction, and 3) classification. You will mainly focus on learning how to use two-types of visual features in this homework. You may simply reuse the classifcation codebase you finished in HW1.
 
 ## Video Pre-Processing
-There are many types of video features. For simplicity, we ask you to extract and aggregate features of RGB frames from videos. For pre-processing, we fist use ffmpeg you learned in HW1 to extract the video frames:
+There are many types of video features. For simplicity, we ask you to extract and aggregate features of RGB frames from videos.
+In our example code, we directly read frames from the videos to extract features.
+Alternatively, you can speed up the feature extraction process by extracting the frames first onto the disk. You can do this by:
 
 ```
 for video in videos/*.mp4
@@ -26,25 +28,50 @@ do
 done
 ```
 
-## Extract SURF feature
-For the hand-crafted visual feature. We ask you to Extract SURF features over keyframes of downsampled videos (0th, 5th, 10th frame, ...). We provide a simple template for you to work on SURF:
-
+## Extract SURF features
+For the hand-crafted visual feature, we ask you to Extract SURF features over keyframes of downsampled videos (0th, 5th, 10th frame, ..., etc.). We use OpenCV to extract SURF feature. To do so, you need to downgrade OpenCV:
 ```
-python surf_feat_extraction.py -i list/all.video config.yaml
+$ sudo pip uninstall opencv-python -y
+$ sudo pip uninstall opencv-contrib-python -y
+$ sudo pip install opencv-contrib-python==3.4.2.16
+```
+Or you can follow this [link](https://github.com/opencv/opencv-python/issues/126#issuecomment-621583923) to build the latest OpenCV from source.
+
++ Step 1. Extract SURF keypoint features at a frame rate of 1.5, meaning that we will extract one frame of features every 20 frames
+```
+$ python surf_feat_extraction.py videos surf_feat/ --feat_fps 1.5
+```
+This will take 2-4 hours and 25 GB disk space.
+
++ Step 2. K-Means clustering
+
+First randomly select a subset of the features to speed things up. This may affect the quality of the clusters.
+```
+$ python select_frames.py labels/trainval.csv surf_feat/ 0.01 selected.surf.csv
 ```
 
-Please check surf_feat_extraction.py for details.
+K-Means clustering with 256 centers (1-3 hrs):
+```
+$ python train_kmeans.py selected.surf.csv 256 surf.kmeans.256.model
+```
+
++ Step 3. Get Bag-of-Words features
+```
+$ ls videos/|while read line;do filename=$(basename $line .mp4);echo $filename;done > videos.name.lst
+$ python old_code/get_bof.py surf.kmeans.256.model surf_feat/ 256  videos.name.lst surf_bof
+```
 
 
 ## Extract CNN features
-In HW2 we ask you to extract CNN-based feature for each frame. We provide an example using ResNet, a type of CNN model that has been widely used in many computer vision tasks. To extract the feature of an image. You may use:
-```
-model = Get_CNN(cuda=False, model_name='resnet34', layer='avgpool', layer_output_size=512)
-emb = model.get_emb(Image.open('test.jpg'))
-```
-Please check extract_resnet.py for the details. After extracting CNN-based feature, you can choose to apply and build bag-of-words feature as in HW1 or simply use the original feature extracted. You are alos encouraged to try some more advanced model such as DenseNet and RexNeXt. 
+In HW2 we ask you to extract CNN-based feature for each frame. We provide an example using ResNet, a type of CNN model that has been widely used in many computer vision tasks.
+After extracting CNN-based feature for each video frame, you can choose to apply and build bag-of-words feature as in HW1 or simply do a global average or maximum pooling to aggregate the frame-level features (For example, for a 300-frame video you have a 300x512 feature matrix, you average over its 300 frames and get the final 512-dim video representaion.).
+You are also encouraged to try some more advanced model such as DenseNet and RexNeXt.
 
-Once you have the features for each frame, you can then aggregate them by averaging or maximizing these vectors to build the final video-level feature. (For example, for a 300-frame video you have a 300x512 feature matrix, you average over its 300 frames and get the final 512-dim video representaion.)
+In the example, we will use PyTorch (torch 1.6.0, torchvision 0.7.0).
+To run the example code:
+```
+$ python cnn_feat_extraction.py videos cnn_resnet18_feat --use_gpu --model resnet18
+```
 
 
 
