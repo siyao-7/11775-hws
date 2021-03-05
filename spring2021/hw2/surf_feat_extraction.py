@@ -44,17 +44,16 @@ def get_surf_features_from_video(surf_detector,
 
 
 def get_keyframes(video_filepath, keyframe_interval):
-  "Generator function which returns the next keyframe."
+  """Generator function which returns the next keyframe.
+  Args:
+      video_filepath (string):
+      keyframe_interval (int):
+  Returns:
+      frame (np.array):
+  """
 
   video_cap = cv2.VideoCapture(video_filepath)
-  frame = 0
-  while True:
-    frame += 1
-    ret, img = video_cap.read()
-    if ret is False:
-      break
-    if frame % keyframe_interval == 0:
-      yield img
+
   video_cap.release()
 
 if __name__ == '__main__':

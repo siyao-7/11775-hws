@@ -37,7 +37,7 @@ $ sudo pip install opencv-contrib-python==3.4.2.16
 ```
 Or you can follow this [link](https://github.com/opencv/opencv-python/issues/126#issuecomment-621583923) to build the latest OpenCV from source.
 
-+ Step 1. Extract SURF keypoint features at a frame rate of 1.5, meaning that we will extract one frame of features every 20 frames
++ Step 1. Extract SURF keypoint features at a frame rate of 1.5, meaning that we will extract one frame of features every 20 frames. Please implement the frame read function.
 ```
 $ python surf_feat_extraction.py videos surf_feat/ --feat_fps 1.5
 ```
@@ -61,17 +61,17 @@ $ ls videos/|while read line;do filename=$(basename $line .mp4);echo $filename;d
 $ python old_code/get_bof.py surf.kmeans.256.model surf_feat/ 256  videos.name.lst surf_bof
 ```
 
+### [Optional] VLAD Encoding
+Please follow instructions in the writeup to implement this part.
+
 
 ## Extract CNN features
 In HW2 we ask you to extract CNN-based feature for each frame. We provide an example using ResNet, a type of CNN model that has been widely used in many computer vision tasks.
 After extracting CNN-based feature for each video frame, you can choose to apply and build bag-of-words feature as in HW1 or simply do a global average or maximum pooling to aggregate the frame-level features (For example, for a 300-frame video you have a 300x512 feature matrix, you average over its 300 frames and get the final 512-dim video representaion.).
 You are also encouraged to try some more advanced model such as DenseNet and RexNeXt.
 
-In the example, we will use PyTorch (torch 1.6.0, torchvision 0.7.0).
-To run the example code:
-```
-$ python cnn_feat_extraction.py videos cnn_resnet18_feat --use_gpu --model resnet18
-```
+In the example, we could use PyTorch (torch 1.6.0, torchvision 0.7.0). [Here](https://becominghuman.ai/extract-a-feature-vector-for-any-image-with-pytorch-9717561d1d4c) is a good tutorial.
+
 
 
 
