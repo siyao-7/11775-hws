@@ -24,15 +24,17 @@ parser.add_argument("--feat_size", type=int, default=512,
                     help="the extracted layer's dimension")
 parser.add_argument("--use_gpu", action="store_true")
 
+
+
 class Get_CNN():
   def __init__(self, cuda=False, model_name='resnet18', layer='avgpool', layer_output_size=512):
     """ Img2Vec
     :param cuda: If set to True, will run forward pass on GPU
-    :param model: String name of requested model
+    :param model_name: String name of requested model
     :param layer and layer_output_size: layer and its output size
     """
     # Model
-
+    raise Exception("Please implement Get_CNN()")
 
     # Transforms
 
@@ -40,9 +42,9 @@ class Get_CNN():
   def get_emb(self, img):
     """ Get vector embedding from PIL image
     :param img: PIL Image
-    :returns: Numpy ndarray
+    :returns: Numpy ndarray of size (layer_output_size,)
     """
-    pass
+    raise Exception("Please implement get_emb()")
 
 
 
@@ -50,7 +52,6 @@ def get_cnn_features_from_video(cnn_model,
                                 video_filepath,
                                 cnn_feat_filepath,
                                 keyframe_interval):
-  "Receives filename of downsampled video and of output path for features."
   " Extracts features in the given keyframe_interval. "
   " Saves features in csv file."
 
@@ -68,10 +69,18 @@ def get_cnn_features_from_video(cnn_model,
     tqdm.write("warning, %s has empty features." % os.path.basename(video_filepath))
 
 def get_keyframes(video_filepath, keyframe_interval):
-  "Generator function which returns the next keyframe."
+  """Generator function which returns the next keyframe.
+  Args:
+      video_filepath (string): path to the video
+      keyframe_interval (int): return a frame every k frame
+  Returns:
+      frame (np.array): opencv loaded RGB frame object
+  """
 
   video_cap = cv2.VideoCapture(video_filepath)
-
+  # TODO: implement your code here
+  # it should be a generator that yields a frame when it should
+  raise Exception("Please implement get_keyframes")
   video_cap.release()
 
 if __name__ == "__main__":

@@ -31,11 +31,7 @@ def get_surf_features_from_video(surf_detector,
     # key_points: the location of the detected key points of current frame
     # feat: the corresponding surf features around the key points
     key_points, feat = surf_detector.detectAndCompute(keyframe, None)
-    # (440, 64) [-0.00128541  0.00350391  0.0021598   0.00519999  0.00177394 -0.00074453
-    # 0.0114676   0.00843902  0.01255265 -0.01106742] ../videos/HW00002470.mp4
     # (num_keypoints, 64)
-    #print(feat.shape, feat[0, :10], video_filepath)
-    #sys.exit()
     surf_feat.append(feat)
 
   pickle.dump(surf_feat, open(surf_feat_filepath, 'wb'))
@@ -46,14 +42,16 @@ def get_surf_features_from_video(surf_detector,
 def get_keyframes(video_filepath, keyframe_interval):
   """Generator function which returns the next keyframe.
   Args:
-      video_filepath (string):
-      keyframe_interval (int):
+      video_filepath (string): path to the video
+      keyframe_interval (int): return a frame every k frame
   Returns:
-      frame (np.array):
+      frame (np.array): opencv loaded RGB frame object
   """
 
   video_cap = cv2.VideoCapture(video_filepath)
-
+  # TODO: implement your code here
+  # it should be a generator that yields a frame when it should
+  raise Exception("Please implement get_keyframes")
   video_cap.release()
 
 if __name__ == '__main__':
