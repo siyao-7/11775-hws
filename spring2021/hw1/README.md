@@ -1,7 +1,7 @@
 # HW1
 
 ## Feature extraction
-MFCC: use the same step as sample code https://github.com/11775website/11775-hws/tree/master/spring2021/hw1
+MFCC: use the same step as sample code https://github.com/11775website/11775-hws/tree/master/spring2021/hw1 <br />
 SoundNet: follow the step in https://github.com/JunweiLiang/SoundNet-tensorflow to generate soundnet features. Store the results under /hw1/soundnet, and run python avgpool.py. The final result will be located in /hw1/avgpool18/
 
 ## For testing
