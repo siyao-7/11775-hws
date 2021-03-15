@@ -28,6 +28,8 @@ do
 done
 ```
 
+We recommend reading from the videos directly to save disk space.
+
 ## Extract SURF features
 For the hand-crafted visual feature, we ask you to Extract SURF features over keyframes of downsampled videos (0th, 5th, 10th frame, ..., etc.). We use OpenCV to extract SURF feature. To do so, you need to downgrade OpenCV:
 ```
@@ -37,11 +39,11 @@ $ sudo pip install opencv-contrib-python==3.4.2.16
 ```
 Or you can follow this [link](https://github.com/opencv/opencv-python/issues/126#issuecomment-621583923) to build the latest OpenCV from source.
 
-+ Step 1. Extract SURF keypoint features at a frame rate of 1.5, meaning that we will extract one frame of features every 20 frames. *Please implement the get_keyframes function.*
++ Step 1. Extract SURF keypoint features at a frame rate of 1.5, meaning that we will extract one frame of features every 20 frames. *Please implement the get_keyframes function. feat_fps=1.5 should mean that the keyframe_interval is 5 for 30fps videos.*
 ```
 $ python surf_feat_extraction.py videos surf_feat/ --feat_fps 1.5
 ```
-This will take 2-4 hours and 25 GB disk space.
+This will take 2-4 hours and 25 GB disk space. (We experimented with a i5-core CPU machine.)
 
 + Step 2. K-Means clustering
 
@@ -73,6 +75,7 @@ You are also encouraged to try some more advanced model such as DenseNet and Rex
 
 In the code template, we use PyTorch (torch 1.6.0, torchvision 0.7.0). [Here](https://becominghuman.ai/extract-a-feature-vector-for-any-image-with-pytorch-9717561d1d4c) is a good tutorial of how to extract feature from an image. *Please implement Get_CNN object in cnn_feat_extraction.py*
 
+For speed reference, it took about 1 hour to extract all the videos with feat_fps=1.5 (which means we get 15 frame-level features from a 10-second video) using a GPU. With CPU only, it would take about 3 hours (we used a i5-core CPU machine). In terms of disk space usage, depending on the feature dimension, it should take 125 MB (512 dimension) to 800 MB (4096 dimension).
 
 
 ## Training and Testing Classifiers
