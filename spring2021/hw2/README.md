@@ -39,7 +39,7 @@ $ sudo pip install opencv-contrib-python==3.4.2.16
 ```
 Or you can follow this [link](https://github.com/opencv/opencv-python/issues/126#issuecomment-621583923) to build the latest OpenCV from source.
 
-+ Step 1. Extract SURF keypoint features at a frame rate of 1.5, meaning that we will extract one frame of features every 20 frames. *Please implement the get_keyframes function. feat_fps=1.5 should mean that the keyframe_interval is 5 for 30fps videos.*
++ Step 1. Extract SURF keypoint features at a frame rate of 1.5, meaning that we will extract one frame of features every 20 frames. *Please implement the get_keyframes function. feat_fps=1.5 should mean that the keyframe_interval is 20 for 30fps videos.*
 ```
 $ python surf_feat_extraction.py videos surf_feat/ --feat_fps 1.5
 ```
