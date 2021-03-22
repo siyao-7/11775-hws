@@ -1,0 +1,65 @@
+#!/bin/python
+
+import argparse
+import numpy as np
+import os
+from sklearn.svm.classes import SVC
+import pickle
+import sys
+import time
+import numpy as np
+
+# Apply the SVM model to the testing videos;
+# Output the prediction class for each video
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("model_file")
+parser.add_argument("feat_dir")
+parser.add_argument("feat_dim", type=int)
+parser.add_argument("list_videos")
+parser.add_argument("output_file")
+parser.add_argument("--feat_appendix", default="-rgb.npz")
+
+if __name__ == '__main__':
+
+  args = parser.parse_args()
+  start = time.time()
+  # 1. load svm model
+  svm = pickle.load(open(args.model_file, "rb"))
+
+  # 2. Create array containing features of each sample
+  fread = open(args.list_videos, "r")
+  feat_list = []
+  video_ids = []
+  for line in fread.readlines():
+    # HW00006228
+    video_id = os.path.splitext(line.strip())[0]
+    video_ids.append(video_id)
+    # pdb.set_trace()
+    #feat_filepath = os.path.join(args.feat_dir, video_id + ".kmeans.csv")
+    feat_filepath = os.path.join(args.feat_dir, video_id + args.feat_appendix)
+    if not os.path.exists(feat_filepath):
+      feat_list.append(np.zeros(args.feat_dim))
+    else:
+      tmp = np.load(feat_filepath)
+      tmp_feat = np.mean(np.squeeze(tmp.f.feature),axis=0)
+      if tmp_feat.shape != (1024,):
+          feat_list.append(np.zeros(args.feat_dim))
+      else:
+          feat_list.append(tmp_feat)
+
+  X = np.array(feat_list)
+
+  # 3. Get scores with trained svm model
+  # (num_samples, num_class)
+  scoress = svm.decision_function(X)
+
+  # 4. save the argmax decisions for submission
+  with open(args.output_file, "w") as f:
+    f.writelines("Id,Category\n")
+    for i, scores in enumerate(scoress):
+      predicted_class = np.argmax(scores)
+      f.writelines("%s,%d\n" % (video_ids[i], predicted_class))
+  end = time.time()
+  print("Time for computation: ", (end - start))

@@ -6,6 +6,7 @@ import torch
 import torch.nn as nn
 import torchvision.models as models
 import torchvision.transforms as transforms
+from torch.autograd import Variable
 import numpy as np
 from PIL import Image
 from glob import glob
@@ -33,10 +34,17 @@ class Get_CNN():
     :param model_name: String name of requested model
     :param layer and layer_output_size: layer and its output size
     """
-    # Model
-    raise Exception("Please implement Get_CNN()")
-
-    # Transforms
+    self.layer_output_size = layer_output_size
+    if model_name=='resnet18':
+        self.model = models.resnet18(pretrained=True)
+        self.layer = self.model._modules.get(layer)
+        self.model.eval()
+    else:
+        raise Exception("Does not support this model")
+    self.scaler = transforms.Resize((224, 224))
+    self.normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    self.to_tensor = transforms.ToTensor()
+    self.cuda = cuda
 
 
   def get_emb(self, img):
@@ -44,7 +52,24 @@ class Get_CNN():
     :param img: PIL Image
     :returns: Numpy ndarray of size (layer_output_size,)
     """
-    raise Exception("Please implement get_emb()")
+    #img = Image.open(image_name)
+    t_img = Variable(self.normalize(self.to_tensor(self.scaler(img))).unsqueeze(0))
+    my_embedding = torch.zeros(self.layer_output_size)
+    
+    if self.cuda:
+        self.model.to('cuda')
+        t_img = t_img.to('cuda')
+        my_embedding = my_embedding.to('cuda')
+
+    def copy_data(m, i, o):
+        my_embedding.copy_(o.data.reshape(o.data.size(1)))
+
+    h = self.layer.register_forward_hook(copy_data)
+        
+    self.model(t_img)
+    h.remove()
+
+    return my_embedding
 
 
 
@@ -60,9 +85,10 @@ def get_cnn_features_from_video(cnn_model,
   for keyframe in get_keyframes(video_filepath, keyframe_interval):
     # (layer_output_size,)
     emb = model.get_emb(Image.fromarray(cv2.cvtColor(keyframe, cv2.COLOR_BGR2RGB)))
-    cnn_feats.append(emb)
+    cnn_feats.append(emb.cpu().numpy())
   if cnn_feats:
     # global average pooling
+    cnn_feats = np.stack(cnn_feats, axis=0)
     cnn_feat = np.mean(cnn_feats, axis=0)
     np.savetxt(cnn_feat_filepath, cnn_feat)
   else:
@@ -76,12 +102,30 @@ def get_keyframes(video_filepath, keyframe_interval):
   Returns:
       frame (np.array): opencv loaded RGB frame object
   """
-
   video_cap = cv2.VideoCapture(video_filepath)
-  # TODO: implement your code here
-  # it should be a generator that yields a frame when it should
-  raise Exception("Please implement get_keyframes")
+  for i in range(15):
+    video_cap.set(1,i*keyframe_interval)
+    ret, frame = video_cap.read()
+    if ret:
+        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        yield rgb
+    else:
+        break
   video_cap.release()
+    
+#   count = 0
+#   while video_cap.isOpened():
+#     ret, frame = video_cap.read()
+    
+#     if ret:
+#         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+#         count += keyframe_interval
+#         video_cap.set(1,count)
+#         yield rgb
+#     else:
+#         break
+#   video_cap.release()
+
 
 if __name__ == "__main__":
   args = parser.parse_args()

@@ -49,9 +49,17 @@ def get_keyframes(video_filepath, keyframe_interval):
   """
 
   video_cap = cv2.VideoCapture(video_filepath)
-  # TODO: implement your code here
-  # it should be a generator that yields a frame when it should
-  raise Exception("Please implement get_keyframes")
+  count = 0
+  while video_cap.isOpened():
+    ret, frame = video_cap.read()
+    
+    if ret:
+        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        count += keyframe_interval
+        video_cap.set(1,count)
+        yield rgb
+    else:
+        break
   video_cap.release()
 
 if __name__ == '__main__':
