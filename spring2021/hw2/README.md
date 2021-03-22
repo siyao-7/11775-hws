@@ -1,8 +1,8 @@
-# HW1
+# HW2
 
 ## Feature extraction
 SURF: use the same step as sample code https://github.com/11775website/11775-hws/tree/master/spring2021/hw2 <br />
-CNN: python cnn_feat_extraction.py videos/ cnn_feat/ --use_gpu
+CNN: python cnn_feat_extraction.py videos/ cnn_feat/ --use_gpu <br />
 I3D: follow instructions in https://github.com/Finspire13/pytorch-i3d-feature-extraction, put the result under folder i3d/
 
 ## For testing
