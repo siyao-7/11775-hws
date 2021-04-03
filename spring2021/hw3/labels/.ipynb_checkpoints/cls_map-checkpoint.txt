@@ -1,0 +1,10 @@
+dribbling_basketball,0
+mowing_lawn,1
+playing_guitar,2
+playing_piano,3
+playing_drums,4
+tapping_pen,5
+blowing_out_candles,6
+singing,7
+tickling,8
+shoveling_snow,9
